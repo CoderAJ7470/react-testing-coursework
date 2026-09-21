@@ -5,22 +5,25 @@ import { setupServer } from 'msw/node';
 import { HttpResponse, http } from 'msw';
 
 describe('The Tags component', () => {
- const tagsServer = setupServer(
-  http.get('http://localhost:3004/tags', () => {
-   return HttpResponse.json([{ id: '1', name: 'bar' }]);
-  })
- );
+  const tagsServer = setupServer(
+    http.get('http://localhost:3004/tags', () => {
+      return HttpResponse.json([{ id: '1', name: 'bar' }]);
+    }),
+  );
 
- beforeAll(() => tagsServer.listen());
- afterAll(() => tagsServer.close());
+  beforeAll(() => tagsServer.listen());
+  afterAll(() => tagsServer.close());
 
- afterEach(() => tagsServer.resetHandlers());
+  afterEach(() => tagsServer.resetHandlers());
 
- it('should render the tags coming from the API response', async () => {
-  render(<Tags />);
+  it('should render the tags coming from the API response', async () => {
+    render(<Tags />);
 
-  const tags = await screen.findAllByTestId('tag');
+    // We can use getAllByTestId here, but that will throw an error if the element is not present
+    // so we use findAllByTestId, which will not throw an error
+    const tags = await screen.findAllByTestId('tag');
 
-  expect(tags).toHaveLength(1);
- });
+    expect(tags).toHaveLength(1);
+    expect(tags[0]).toHaveTextContent('bar');
+  });
 });

@@ -4,28 +4,28 @@ import Tags from './Tags';
 import axios from 'axios';
 
 describe('The Tags component', () => {
- // const tagsServer = setupServer(
- //  http.get('http://localhost:3004/tags', () => {
- //   return HttpResponse.json([{ id: '1', name: 'bar' }]);
- //  })
- // );
+  // const tagsServer = setupServer(
+  //  http.get('http://localhost:3004/tags', () => {
+  //   return HttpResponse.json([{ id: '1', name: 'bar' }]);
+  //  })
+  // );
 
- // beforeAll(() => tagsServer.listen());
- // afterAll(() => tagsServer.close());
+  // beforeAll(() => tagsServer.listen());
+  // afterAll(() => tagsServer.close());
 
- // afterEach(() => tagsServer.resetHandlers());
+  // afterEach(() => tagsServer.resetHandlers());
 
- // This approach NOT recommended by creators of React Testing Library
- it('should render the tags coming from the API response', async () => {
-  const mockResponse = {
-   data: [{ id: '1', name: 'bar' }],
-  };
+  // This approach NOT recommended by creators of React Testing Library, but this is a better approach since it requires less writing and is more straightforward. Also, mocking an http request is easier to control and allows easier writing of tests in different frameworks/languages.
+  it('should render the tags coming from the API response', async () => {
+    const mockResponse = {
+      data: [{ id: '1', name: 'bar' }],
+    };
 
-  vi.spyOn(axios, 'get').mockResolvedValue(mockResponse);
-  render(<Tags />);
+    vi.spyOn(axios, 'get').mockResolvedValue(mockResponse);
+    render(<Tags />);
 
-  const tags = await screen.findAllByTestId('tag');
+    const tags = await screen.findAllByTestId('tag');
 
-  expect(tags).toHaveLength(1);
- });
+    expect(tags).toHaveLength(1);
+  });
 });
