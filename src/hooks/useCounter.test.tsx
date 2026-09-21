@@ -1,6 +1,6 @@
 import { describe, it } from 'vitest';
 import useCounter from './useCounter';
-import { act, render, renderHook } from '@testing-library/react';
+import { act, renderHook } from '@testing-library/react';
 
 describe('The useCounter hook', () => {
   it('should render the initial count', () => {
